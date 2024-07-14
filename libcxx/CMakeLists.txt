@@ -53,12 +53,12 @@ option(LIBCXX_ENABLE_ASSERTIONS
   "Enable assertions inside the compiled library, and at the same time make it the
    default when compiling user code. Note that assertions can be enabled or disabled
    by users in their own code regardless of this option." OFF)
-option(LIBCXX_ENABLE_SHARED "Build libc++ as a shared library." ON)
+option(LIBCXX_ENABLE_SHARED "Build libc++ as a shared library." OFF)
 option(LIBCXX_ENABLE_STATIC "Build libc++ as a static library." ON)
 option(LIBCXX_ENABLE_FILESYSTEM
   "Whether to include support for parts of the library that rely on a filesystem being
    available on the platform. This includes things like most parts of <filesystem> and
-   others like <fstream>" ON)
+   others like <fstream>" OFF)
 option(LIBCXX_INCLUDE_TESTS "Build the libc++ tests." ${LLVM_INCLUDE_TESTS})
 set(LIBCXX_SUPPORTED_HARDENING_MODES none fast extensive debug)
 set(LIBCXX_HARDENING_MODE "none" CACHE STRING
@@ -88,7 +88,7 @@ option(LIBCXX_ENABLE_LOCALIZATION
    localization can be useful when porting to platforms that don't support
    the C locale API (e.g. embedded). When localization is not supported,
    several parts of the library will be disabled: <iostream>, <regex>, <locale>
-   will be completely unusable, and other parts may be only partly available." ON)
+   will be completely unusable, and other parts may be only partly available." OFF)
 option(LIBCXX_ENABLE_UNICODE
   "Whether to include support for Unicode in the library. Disabling Unicode can
    be useful when porting to platforms that don't support UTF-8 encoding (e.g.
@@ -98,7 +98,7 @@ option(LIBCXX_ENABLE_WIDE_CHARACTERS
    wide character support can be useful when porting to platforms that don't
    support the C functionality for wide characters. When wide characters are
    not supported, several parts of the library will be disabled, notably the
-   wide character specializations of std::basic_string." ON)
+   wide character specializations of std::basic_string." OFF)
 
 # To use time zone support in libc++ the platform needs to have the IANA
 # database installed. Libc++ will fail to build if this is enabled on a
@@ -153,7 +153,7 @@ set(LIBCXX_TEST_PARAMS "" CACHE STRING
     "A list of parameters to run the Lit test suite with.")
 
 # Benchmark options -----------------------------------------------------------
-option(LIBCXX_INCLUDE_BENCHMARKS "Build the libc++ benchmarks and their dependencies" ON)
+option(LIBCXX_INCLUDE_BENCHMARKS "Build the libc++ benchmarks and their dependencies" OFF)
 
 set(LIBCXX_BENCHMARK_TEST_ARGS_DEFAULT --benchmark_min_time=0.01)
 set(LIBCXX_BENCHMARK_TEST_ARGS "${LIBCXX_BENCHMARK_TEST_ARGS_DEFAULT}" CACHE STRING
@@ -285,14 +285,14 @@ if (LIBCXX_BUILD_32_BITS)
 endif()
 
 # Feature options -------------------------------------------------------------
-option(LIBCXX_ENABLE_EXCEPTIONS "Use exceptions." ON)
+option(LIBCXX_ENABLE_EXCEPTIONS "Use exceptions." OFF)
 option(LIBCXX_ENABLE_RTTI
   "Use runtime type information.
-   This option may only be set to OFF when LIBCXX_ENABLE_EXCEPTIONS=OFF." ON)
-option(LIBCXX_ENABLE_THREADS "Build libc++ with support for threads." ON)
+   This option may only be set to OFF when LIBCXX_ENABLE_EXCEPTIONS=OFF." OFF)
+option(LIBCXX_ENABLE_THREADS "Build libc++ with support for threads." OFF)
 option(LIBCXX_ENABLE_MONOTONIC_CLOCK
   "Build libc++ with support for a monotonic clock.
-   This option may only be set to OFF when LIBCXX_ENABLE_THREADS=OFF." ON)
+   This option may only be set to OFF when LIBCXX_ENABLE_THREADS=OFF." OFF)
 option(LIBCXX_HAS_MUSL_LIBC "Build libc++ with support for the Musl C library" OFF)
 option(LIBCXX_HAS_PTHREAD_API "Ignore auto-detection and force use of pthread API" OFF)
 option(LIBCXX_HAS_WIN32_THREAD_API "Ignore auto-detection and force use of win32 thread API" OFF)
@@ -723,11 +723,11 @@ function(cxx_link_system_libraries target)
       set(CXX_LIB "libcpmt")
     endif()
 
-    target_link_libraries(${target} PRIVATE ${CRT_LIB}${LIB_SUFFIX}) # C runtime startup files
-    target_link_libraries(${target} PRIVATE ${CXX_LIB}${LIB_SUFFIX}) # C++ standard library. Required for exception_ptr internals.
+    #target_link_libraries(${target} PRIVATE ${CRT_LIB}${LIB_SUFFIX}) # C runtime startup files
+    #target_link_libraries(${target} PRIVATE ${CXX_LIB}${LIB_SUFFIX}) # C++ standard library. Required for exception_ptr internals.
     # Required for standards-complaint wide character formatting functions
     # (e.g. `printfw`/`scanfw`)
-    target_link_libraries(${target} PRIVATE iso_stdio_wide_specifiers)
+    #target_link_libraries(${target} PRIVATE iso_stdio_wide_specifiers)
   endif()
 
   if (ANDROID AND ANDROID_PLATFORM_LEVEL LESS 21)

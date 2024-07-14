@@ -98,17 +98,17 @@ if (LIBCXX_ENABLE_LOCALIZATION)
 endif()
 
 if(WIN32)
-  list(APPEND LIBCXX_SOURCES
-    support/win32/compiler_rt_shims.cpp
-    support/win32/locale_win32.cpp
-    support/win32/support.cpp
-    )
+  #list(APPEND LIBCXX_SOURCES
+  #  support/win32/compiler_rt_shims.cpp
+  #  support/win32/locale_win32.cpp
+  #  support/win32/support.cpp
+  #  )
 
-  if (NOT LIBCXX_HAS_PTHREAD_API)
-    list(APPEND LIBCXX_SOURCES
-      support/win32/thread_win32.cpp
-      )
-  endif()
+  #if (NOT LIBCXX_HAS_PTHREAD_API)
+  #  list(APPEND LIBCXX_SOURCES
+  #    support/win32/thread_win32.cpp
+  #    )
+  #endif()
 elseif(ZOS)
   list(APPEND LIBCXX_SOURCES
     support/ibm/mbsnrtowcs.cpp
@@ -292,7 +292,7 @@ set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 if (LIBCXX_ENABLE_STATIC)
   add_library(cxx_static STATIC ${exclude_from_all} ${LIBCXX_SOURCES} ${LIBCXX_HEADERS})
   target_include_directories(cxx_static PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-  target_link_libraries(cxx_static PUBLIC cxx-headers
+  target_link_libraries(cxx_static PUBLIC cxx-headers c
                                    PRIVATE ${LIBCXX_LIBRARIES}
                                    PRIVATE libcxx-abi-static)
   set_target_properties(cxx_static

@@ -43,6 +43,9 @@
 #  include <bits/types/mbstate_t.h> // works on most Unixes
 #elif __has_include(<sys/_types/_mbstate_t.h>)
 #  include <sys/_types/_mbstate_t.h> // works on Darwin
+#elif defined(_NEWLIB_VERSION)
+#  include <sys/_types.h> // works on newlib
+typedef _mbstate_t mbstate_t;
 #elif !defined(_LIBCPP_HAS_NO_WIDE_CHARACTERS) && __has_include_next(<wchar.h>)
 #  include_next <wchar.h> // fall back to the C standard provider of mbstate_t
 #elif __has_include_next(<uchar.h>)
