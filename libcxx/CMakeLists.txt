@@ -98,7 +98,7 @@ option(LIBCXX_ENABLE_WIDE_CHARACTERS
    wide character support can be useful when porting to platforms that don't
    support the C functionality for wide characters. When wide characters are
    not supported, several parts of the library will be disabled, notably the
-   wide character specializations of std::basic_string." OFF)
+   wide character specializations of std::basic_string." ON)
 
 # To use time zone support in libc++ the platform needs to have the IANA
 # database installed. Libc++ will fail to build if this is enabled on a
