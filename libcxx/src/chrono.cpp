@@ -50,10 +50,6 @@
 #  include <zircon/syscalls.h>
 #endif
 
-#if __has_include(<mach/mach_time.h>)
-#  include <mach/mach_time.h>
-#endif
-
 #if defined(__ELF__) && defined(_LIBCPP_LINK_RT_LIB)
 #  pragma comment(lib, "rt")
 #endif
